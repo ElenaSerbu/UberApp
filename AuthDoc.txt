@@ -1,0 +1,8 @@
+ApplicatiionDbContext derivata a IdentityDbContext- this is the dbContext included in IdentityEF) derivata din
+  versiunea generica a IdentityDbContext<IdentityUSer, IdentityRole, string(PK for both)> mosteneste alte versiuni
+					->why? IdentityDBContext contains all the dbSets(all the tables needed) 
+              ->aici se pot adauga alte DBSets(ex: Produse)
+IdentityUser(derivata a IdentityUser<string(PK generic TKey)>) & IdentityRole are included in the IdentityFramework
+
+pt a adauga o noua coloana pt IdentityUser -> cream o noua clasa ApplicationUser derivata..
+ pt migrare -> add-migration User-Career; update-database

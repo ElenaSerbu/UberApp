@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Auth.Data
+@model CompaniesModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Watchlist</h1>
+
+    <form asp-controller="Watchlist" asp-action="Index">
+        <p>
+            Title: <input type="text" name="symbol">
+            <input type="submit" value="Search" />
+        </p>
+    </form>
+
+    <form asp-controller="Watchlist" asp-action="Watchlist">
+        <div>
+            <input type="submit" value="My Watchlist" />
+        </div>
+    </form>
+    @if (Model != null)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th style="padding-right: 25px">Symbol</th>
+                    <th style="padding-right: 25px">Name</th>
+                    <th style="padding-right: 25px">Type</th>
+                    <th style="padding-right: 25px">Region</th>
+                    <th style="padding-right: 25px">Market Open</th>
+                    <th style="padding-right: 25px">Market Close</th>
+                    <th style="padding-right: 25px">Timezone</th>
+                    <th style="padding-right: 25px">Currency</th>
+                    <th style="padding-right: 25px">Match Score</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @using (Html.BeginForm("AddToWatchlist", "Watchlist"))
+                {
+                    @foreach (var item in Model.BestMatches)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" name="symbol" value="@item.Symbol" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Region)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketOpen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketClose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Timezone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Currency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MatchScore)
+                            </td>
+                            <td>
+                                <input type="submit" value="Add" />
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    }
+}

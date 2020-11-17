@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Auth.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<UserWatchlistModel>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Your watchlist</h1>
+
+    <form asp-controller="Watchlist" asp-action="BackToSearch">
+        <p>
+            <input type="submit" value="Back to Search" />
+        </p>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="padding-right: 25px">Symbol</th>
+                <th style="padding-right: 25px">Name</th>
+                <th style="padding-right: 25px">Region</th>
+                <th style="padding-right: 25px">Market Open</th>
+                <th style="padding-right: 25px">Market Close</th>
+                <th style="padding-right: 25px">Target Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @using (Html.BeginForm("Delete", "Watchlist"))
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" name="symbol" value="@item.Symbol" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CompanyName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CompanyRegion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketOpen)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MarketClose)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StockPrice)
+                            </td>
+                            <td>
+                                <input type="submit" value="Delete" />
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}

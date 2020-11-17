@@ -1,0 +1,21 @@
+﻿@model IList<string>
+
+@{
+    ViewData["title"] = "Users";
+}
+
+<h1>List of users</h1>
+
+<a asp-action="Create">Create</a>
+
+<form action="/admin/delete">
+    <label for="userName">UserName</label>
+    @foreach (var userName in Model)
+    {
+        <div>
+            <input type="text" name="userName" value="@userName" />
+            <input type="submit" value="Delete" />
+        </div>
+    }
+</form>
+
