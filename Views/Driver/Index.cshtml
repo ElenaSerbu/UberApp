@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using UberApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Profile</h1>
+    @*<form asp-controller="Driver" asp-action="AddCar">
+            <div>
+                <input type="submit" value="Register a car" />
+            </div>
+        </form>*@
+
+<div><a asp-action="AddCar">Register a car</a></div>
+<div><a asp-action="RegisteredCars">See your registered cars</a></div>
+<div><a asp-action="AvailableTrips">See available trips</a></div>
+}

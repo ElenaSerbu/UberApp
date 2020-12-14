@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Auth.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Auth.Interfaces;
-using Auth.Infrastructure;
-using Auth.Services;
-using AutoMapper;
+using Stripe;
+using UberApp.Data;
+using UberApp.Interfaces;
+using UberApp.Services;
 
-namespace Auth
+namespace UberApp
 {
     public class Startup
     {
@@ -28,18 +23,15 @@ namespace Auth
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSingleton<IGetCompaniesRequest, GetCompaniesRequest>();
-            services.AddSingleton<IWatchlistService, WatchlistService>();
+            services.AddScoped<IDriverService, DriverService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -54,24 +46,15 @@ namespace Auth
                 .AddDefaultTokenProviders();
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new Auth.Mappings.AutoMapper());
+                mc.AddProfile(new UberApp.Mappings.AutoMapper());
             });
 
             var mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
             services.AddMvc();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-            services.AddAuthorization(options =>
-           {
-               options.AddPolicy("readpolicy",
-                   builder => builder.RequireRole("Admin"));
-           });
-
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -90,12 +73,13 @@ namespace Auth
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            StripeConfiguration.ApiKey = this.Configuration.GetSection("Stripe")["SecretKey"];  //"pk_test_TYooMQauvdEDq54NiTphI7jx"; // 
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Watchlist}/{action=Index}/{id?}");
+                    template: "{controller=Driver}/{action=Index}/{id?}");
             });
         }
     }

@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using UberApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<UberApp.Models.TripModel>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Available trips</h1>
+
+    <div>
+        <a asp-action="Index">Back to Home</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="padding-right: 25px">Id</th>
+                <th style="padding-right: 25px">Start Location</th>
+                <th style="padding-right: 25px">End Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @using (Html.BeginForm("SelectTrip", "Driver"))
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" name="id" value="@item.Id" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartLocation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndLocation)
+                            </td>
+                            <td>
+                                <input type="submit" value="Select" />
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}

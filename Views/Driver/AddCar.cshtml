@@ -1,0 +1,56 @@
+﻿@model CarModel
+
+@{
+    ViewData["Title"] = "Add Car";
+}
+
+<h1>Add car</h1>
+<hr />
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-7" })
+                <div class="col-md-20">
+                    @Html.TextBoxFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Color, new { @class = "control-label col-md-7" })
+                <div class="col-md-20">
+                    @Html.TextBoxFor(model => model.Color)
+                    @Html.ValidationMessageFor(model => model.Color)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegistrationNumber, new { @class = "control-label col-md-7" })
+                <div class="col-md-20">
+                    @Html.TextBoxFor(model => model.RegistrationNumber)
+                    @Html.ValidationMessageFor(model => model.RegistrationNumber)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegisterTimestamp, new { @class = "control-label col-md-7" })
+                <div class="col-md-20">
+                    @Html.TextBoxFor(model => model.RegisterTimestamp)
+                    @Html.ValidationMessageFor(model => model.RegisterTimestamp)
+                </div>
+            </div>
+
+
+            <div>
+                <input type="submit" value="Add" />
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <a asp-action="Index">Back to Home</a>
+    </div>
+}
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,9 +1,9 @@
-﻿using Auth.Models;
+﻿using UberApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Auth.Controllers
+namespace UberApp.Controllers
 {
     [Authorize]
     public class HomeController : Controller

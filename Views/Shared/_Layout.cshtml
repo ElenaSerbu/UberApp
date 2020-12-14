@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Auth</title>
+    <title>@ViewData["Title"] - UberApp</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -24,11 +24,6 @@
         <div class="container">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if ((await AuthorizationService.AuthorizeAsync(User, "readpolicy")).Succeeded)
-                    {
-                    <li><a asp-area="" asp-controller="Role" asp-action="Index">Role</a></li>
-                    <li><a asp-area="" asp-controller="Admin" asp-action="Index">Users</a></li>
-                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -39,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2020 - Auth</p>
+            <p>&copy; 2020 - UberApp</p>
         </footer>
     </div>
 

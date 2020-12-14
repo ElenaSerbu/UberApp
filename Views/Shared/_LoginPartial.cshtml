@@ -1,5 +1,5 @@
 @using Microsoft.AspNetCore.Identity
-@using Auth.Data 
+@using UberApp.Data 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -12,6 +12,9 @@
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+            </li>
+            <li>
+                <a asp-area="Driver" asp-page="/Driver/Index">Back to Home</a>
             </li>
         </ul>
     </form>

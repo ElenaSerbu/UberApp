@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using UberApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@model IEnumerable<UberApp.Models.CarModel>
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h1>Your registered cars</h1>
+
+    <div>
+        <a asp-action="Index">Back to Home</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="padding-right: 25px">Name</th>
+                <th style="padding-right: 25px">Color</th>
+                <th style="padding-right: 25px">Registration Number</th>
+                <th style="padding-right: 25px">Registration Timestamp</th>
+                <th style="padding-right: 25px">Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Color)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RegisterTimestamp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>
+                        </tr>
+                    }
+            }
+        </tbody>
+    </table>
+}
